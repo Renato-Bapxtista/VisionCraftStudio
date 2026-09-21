@@ -11,6 +11,7 @@ from componentes.upload import renderizar_upload
 from componentes.visualizacao import renderizar_visualizacao
 from componentes.historico import renderizar_historico
 from componentes.ferramentas import renderizar_ferramentas
+from componentes.histograma import renderizar_histograma
 
 def carregar_css(caminho_css: str):
     """Lê um ficheiro CSS local e injeta-o na aplicação Streamlit."""
@@ -44,3 +45,4 @@ with col_centro:
 with col_direita:
     # Renderiza o painel interativo de filtros e ajustes
     renderizar_ferramentas()
+    renderizar_histograma()
