@@ -10,6 +10,7 @@ from componentes.cabecalho import renderizar_cabecalho
 from componentes.upload import renderizar_upload
 from componentes.visualizacao import renderizar_visualizacao
 from componentes.historico import renderizar_historico
+from componentes.ferramentas import renderizar_ferramentas
 
 def carregar_css(caminho_css: str):
     """Lê um ficheiro CSS local e injeta-o na aplicação Streamlit."""
@@ -41,5 +42,5 @@ with col_centro:
     renderizar_visualizacao()
 
 with col_direita:
-    st.markdown("<div class='figma-label'>FERRAMENTAS</div>", unsafe_allow_html=True)
-    st.caption("Painel direito aguardando os filtros.")
+    # Renderiza o painel interativo de filtros e ajustes
+    renderizar_ferramentas()
