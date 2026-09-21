@@ -3,6 +3,14 @@ Modulo: app.py
 Descricao: Ponto de entrada da aplicacao Streamlit.
 """
 
+import os
+import sys
+
+# Adiciona o diretório raiz ao sys.path para permitir a importação dos módulos da raiz (estado, componentes, processamento)
+DIRETORIO_RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if DIRETORIO_RAIZ not in sys.path:
+    sys.path.insert(0, DIRETORIO_RAIZ)
+
 import streamlit as st
 
 from estado import inicializar_estado
@@ -15,14 +23,16 @@ from componentes.histograma import renderizar_histograma
 
 def carregar_css(caminho_css: str):
     """Lê um ficheiro CSS local e injeta-o na aplicação Streamlit."""
-    with open(caminho_css, "r", encoding="utf-8") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    if os.path.exists(caminho_css):
+        with open(caminho_css, "r", encoding="utf-8") as f:
+            st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 # 1. Configuracao basica da pagina no navegador
 st.set_page_config(page_title="Processador de Imagem", layout="wide")
 
-# 2. Carregar o estilo visual externo
-carregar_css("estilos.css")
+# 2. Carregar o estilo visual externo da pasta static
+caminho_estilos = os.path.join(DIRETORIO_RAIZ, "static", "estilos.css")
+carregar_css(caminho_estilos)
 
 # 3. Inicializa as variaveis na memoria do Streamlit
 inicializar_estado()

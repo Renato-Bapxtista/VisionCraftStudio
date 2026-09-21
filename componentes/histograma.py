@@ -3,6 +3,7 @@ Módulo: componentes/histograma.py
 Descrição: Renderização do gráfico de histograma em abas e botão de salvamento/download.
 """
 
+import os
 import matplotlib.pyplot as plt
 import streamlit as st
 from PIL import Image
@@ -15,9 +16,11 @@ def renderizar_histograma():
 
     # Botão de salvamento
     res_img = Image.fromarray(st.session_state.img_atual)
-    res_img.save("temp_download.png")
+    caminho_temp = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "static", "temp_download.png")
+    os.makedirs(os.path.dirname(caminho_temp), exist_ok=True)
+    res_img.save(caminho_temp)
     
-    with open("temp_download.png", "rb") as file:
+    with open(caminho_temp, "rb") as file:
         st.download_button(
             label="Salvar Imagem Resultado",
             data=file,
