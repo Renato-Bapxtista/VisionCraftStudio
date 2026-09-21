@@ -37,22 +37,25 @@ def renderizar_historico():
         st.divider()
 
         st.caption("ETAPAS DO PROCESSAMENTO")
-        opcoes_etapas = list(range(len(st.session_state.pipeline)))
         
-        indice_selecionado = st.radio(
-            "Selecione uma etapa do histórico",
-            opcoes_etapas,
-            format_func=lambda i: (
-                f"{i + 1}. {st.session_state.pipeline[i]['nome']}"
-                f"{' (atual)' if i == st.session_state.active_index else ''}"
-            ),
-            index=st.session_state.active_index,
-            key=f"pipeline_selector_{st.session_state.active_index}_{len(st.session_state.pipeline)}",
-            label_visibility="collapsed",
-        )
+        # Container com rolagens fixas apenas para a lista de etapas do histórico
+        with st.container(height=260, border=False):
+            opcoes_etapas = list(range(len(st.session_state.pipeline)))
+            
+            indice_selecionado = st.radio(
+                "Selecione uma etapa do histórico",
+                opcoes_etapas,
+                format_func=lambda i: (
+                    f"{i + 1}. {st.session_state.pipeline[i]['nome']}"
+                    f"{' (atual)' if i == st.session_state.active_index else ''}"
+                ),
+                index=st.session_state.active_index,
+                key=f"pipeline_selector_{st.session_state.active_index}_{len(st.session_state.pipeline)}",
+                label_visibility="collapsed",
+            )
 
-        if indice_selecionado != st.session_state.active_index:
-            ir_para_etapa(indice_selecionado)
-            st.rerun()
+            if indice_selecionado != st.session_state.active_index:
+                ir_para_etapa(indice_selecionado)
+                st.rerun()
     else:
         st.caption("Carregue uma imagem para iniciar o histórico.")

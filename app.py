@@ -34,15 +34,32 @@ renderizar_cabecalho()
 col_esquerda, col_centro, col_direita = st.columns([1, 2.8, 1.2])
 
 with col_esquerda:
-    # Renderiza o botão de upload e miniatura da imagem original
+    # 1. Topo fixo da coluna esquerda: Upload de Imagem e Ações do Histórico
     renderizar_upload()
     renderizar_historico()
 
 with col_centro:
-    # Renderiza a pré-visualização central[cite: 1]
+    # 2. Área central: Pré-visualização fixa da imagem
     renderizar_visualizacao()
 
 with col_direita:
-    # Renderiza o painel interativo de filtros e ajustes
-    renderizar_ferramentas()
-    renderizar_histograma()
+    # 3. Topo fixo da coluna direita: Rádio "Aplicar Em"
+    st.markdown("<div class='figma-label'>FERRAMENTAS</div>", unsafe_allow_html=True)
+    if st.session_state.img_atual is not None:
+        st.markdown("<div class='figma-label'>APLICAR EM</div>", unsafe_allow_html=True)
+        alvo_op = st.radio(
+            "Selecione o alvo:",
+            ("Última Processada", "Original"),
+            index=0,
+            key="alvo_operacao_fixo",
+            label_visibility="collapsed"
+        )
+        st.session_state.alvo_op_global = alvo_op
+    else:
+        st.info("Aguardando carregamento de imagem...")
+
+    # Área de ferramentas e histograma com scroll independente
+    if st.session_state.img_atual is not None:
+        with st.container(height=540, border=False):
+            renderizar_ferramentas()
+            renderizar_histograma()

@@ -13,28 +13,16 @@ def renderizar_ferramentas():
     """
     Renderiza os grupos de ferramentas de processamento de imagem em painéis expansíveis.
     """
-    st.markdown("<div class='figma-label'>FERRAMENTAS</div>", unsafe_allow_html=True)
-
     if st.session_state.img_atual is None:
-        st.info("Aguardando carregamento de imagem...")
         return
 
-    # Escolha de onde aplicar o efeito (na imagem atual do histórico ou na original)
-    st.markdown("<div class='figma-label'>APLICAR EM</div>", unsafe_allow_html=True)
-    alvo_op = st.radio(
-        "Selecione o alvo:",
-        ("Última Processada", "Original"),
-        index=0,
-        label_visibility="collapsed"
-    )
+    alvo_op = st.session_state.get("alvo_op_global", "Última Processada")
 
     def obter_base():
         """Retorna uma cópia da imagem base selecionada pelo usuário."""
         if alvo_op == "Original":
             return st.session_state.img_original.copy()
         return st.session_state.img_atual.copy()
-
-    st.write("")
 
     # --- GRUPOS DE FERRAMENTAS EXPANSÍVEIS ---
     grupo_tom = st.expander("Ajustes de Tom", expanded=True)
