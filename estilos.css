@@ -1,47 +1,120 @@
-/* ==========================================
-   ESTILOS GLOBAIS DA APLICAÇÃO
-   ========================================== */
+ /* Oculta scroll global */
+        html, body, [data-testid="stAppViewContainer"], .main {
+            background-color: #F8F9FA !important;
+            color: #1F2937 !important;
+            overflow: hidden !important;
+            height: 100vh !important;
+        }
+        
+        /* Oculta header padrão */
+        header[data-testid="stHeader"] {
+            display: none !important;
+        }
 
-/* Oculta scrollbars indesejados e ajusta o fundo da página */
-html, body, [data-testid="stAppViewContainer"], .main {
-    background-color: #F8F9FA !important;
-    color: #1F2937 !important;
-    overflow: hidden !important;
-    height: 100vh !important;
-}
+        .block-container {
+            padding-top: 0.5rem !important;
+            padding-bottom: 0rem !important;
+            padding-left: 1.2rem !important;
+            padding-right: 1.2rem !important;
+        }
 
-/* Oculta o cabeçalho padrão (menu do Streamlit) */
-header[data-testid="stHeader"] {
-    display: none !important;
-}
+        .figma-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #FFFFFF;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid #E5E7EB;
+            margin-bottom: 8px;
+        }
 
-/* Margens internas da página principal */
-.block-container {
-    padding-top: 0.5rem !important;
-    padding-bottom: 0rem !important;
-    padding-left: 1.2rem !important;
-    padding-right: 1.2rem !important;
-}
+        /* TRAVA NAS COLUNAS NATIVAS */
+        [data-testid="stColumn"] {
+            height: 88vh !important;
+            max-height: 88vh !important;
+            overflow-y: auto !important;
+            overflow-x: hidden !important;
+        }
 
-/* Estilo do nosso cabeçalho customizado */
-.figma-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #FFFFFF;
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: 1px solid #E5E7EB;
-    margin-bottom: 8px;
-}
+        /* CENTRALIZAÇÃO DA COLUNA CENTRAL */
+        [data-testid="stColumn"]:nth-child(2) {
+            overflow: hidden !important;
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: center !important;
+            align-items: center !important;
+        }
 
-/* Rótulos padronizados para as colunas */
-.figma-label {
-    font-size: 0.7rem;
-    font-weight: 700;
-    color: #9CA3AF;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-    width: 100%;
-}
+        /* IMAGEM CENTRALIZADA */
+        [data-testid="stColumn"]:nth-child(2) [data-testid="stImage"] {
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        [data-testid="stColumn"]:nth-child(2) img {
+            max-height: 100vh !important;
+            width: auto !important;
+            max-width: 100% !important;
+            object-fit: contain !important;
+            margin: auto !important;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .figma-label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #9CA3AF;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            width: 100%;
+        }
+
+        div.stButton > button {
+            width: 100%;
+            background-color: #FFFFFF;
+            color: #1F2937;
+            border: 1px solid #E5E7EB;
+            border-radius: 8px;
+            padding: 0.35rem 0.7rem;
+            font-weight: 500;
+            font-size: 0.82rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        
+        div.stButton > button:hover {
+            background-color: #F3F4F6;
+            border-color: #D1D5DB;
+        }
+
+        /* ESTILIZAÇÃO E COMPACTAÇÃO DO MODAL (DIALOG) */
+        [data-testid="stDialog"] > div:first-child {
+            max-width: 400px !important;
+            width: 400px !important;
+            max-height: 400px !important;
+            height: 400px !important;
+            border-radius: 12px !important;
+            background-color: #FFFFFF !important;
+            border: 1px solid #E5E7EB !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
+            padding: 1rem !important;
+        }
+
+        [data-testid="stDialog"] h2 {
+            font-size: 1.0rem !important;
+            font-weight: 700 !important;
+            color: #111827 !important;
+        }
+
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 2px;
+        }
+        .stTabs [data-baseweb="tab"] {
+            padding: 2px 8px !important;
+            font-size: 0.75rem !important;
+        }
