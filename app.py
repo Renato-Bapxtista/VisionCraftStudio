@@ -9,6 +9,7 @@ from estado import inicializar_estado
 from componentes.cabecalho import renderizar_cabecalho
 from componentes.upload import renderizar_upload
 from componentes.visualizacao import renderizar_visualizacao
+from componentes.historico import renderizar_historico
 
 def carregar_css(caminho_css: str):
     """Lê um ficheiro CSS local e injeta-o na aplicação Streamlit."""
@@ -33,6 +34,7 @@ col_esquerda, col_centro, col_direita = st.columns([1, 2.8, 1.2])
 with col_esquerda:
     # Renderiza o botão de upload e miniatura da imagem original
     renderizar_upload()
+    renderizar_historico()
 
 with col_centro:
     # Renderiza a pré-visualização central[cite: 1]

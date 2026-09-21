@@ -51,7 +51,7 @@ def renderizar_upload():
                 st.session_state.active_index = 0
 
                 # Chama a função definida em estado.py
-                registrar_nova_etapa("Carga Inicial", matriz_img)
+                registrar_nova_etapa("Carregamento Inicial", matriz_img)
 
                 st.session_state.img_info = {
                     "nome": uploaded_file.name,

@@ -47,4 +47,17 @@ def registrar_nova_etapa(nome_efeito: str, nova_imagem):
     })
     st.session_state.active_index = len(st.session_state.pipeline) - 1
     st.session_state.img_atual = nova_imagem
+
+def ir_para_etapa(indice: int):
+    """Muda a imagem ativa para a etapa selecionada do histórico."""
+    st.session_state.active_index = indice
+    st.session_state.img_atual = st.session_state.pipeline[indice]["imagem"].copy()
+
+def remover_etapa_atual():
+    """Remove a etapa ativa e todas as etapas posteriores."""
+    indice = st.session_state.active_index
+    if indice == 0:
+        return
+    st.session_state.pipeline = st.session_state.pipeline[:indice]
+    ir_para_etapa(indice - 1)
     
