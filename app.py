@@ -4,9 +4,11 @@ Descricao: Ponto de entrada da aplicacao Streamlit.
 """
 
 import streamlit as st
+
 from estado import inicializar_estado
 from componentes.cabecalho import renderizar_cabecalho
 from componentes.upload import renderizar_upload
+from componentes.visualizacao import renderizar_visualizacao
 
 def carregar_css(caminho_css: str):
     """Lê um ficheiro CSS local e injeta-o na aplicação Streamlit."""
@@ -33,8 +35,8 @@ with col_esquerda:
     renderizar_upload()
 
 with col_centro:
-    st.markdown("<div class='figma-label'>PRÉ-VISUALIZAÇÃO</div>", unsafe_allow_html=True)
-    st.info("Painel central aguardando a visualização da imagem.")
+    # Renderiza a pré-visualização central[cite: 1]
+    renderizar_visualizacao()
 
 with col_direita:
     st.markdown("<div class='figma-label'>FERRAMENTAS</div>", unsafe_allow_html=True)
