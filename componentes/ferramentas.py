@@ -75,6 +75,12 @@ def renderizar_ferramentas():
             registrar_nova_etapa(f"Gama ({v_gama:.1f})", resultado)
             st.rerun()
 
+        if st.button("Alongamento de Contraste", use_container_width=True):
+            base = obter_base()
+            resultado = pontuais.alongar_contraste(base)
+            registrar_nova_etapa("Alongamento de Contraste", resultado)
+            st.rerun()
+
     # 2. EFEITOS VISUAIS
     with grupo_efeitos:
         st.caption("Efeitos estilizados para modificação de cores.")
@@ -105,6 +111,13 @@ def renderizar_ferramentas():
             base = obter_base()
             resultado = espaciais.suavizar_media(base, tamanho_media)
             registrar_nova_etapa(f"Média ({tamanho_media}x{tamanho_media})", resultado)
+            st.rerun()
+
+        v_ruido = st.slider("Intensidade do Ruído", 5, 50, 25)
+        if st.button("Adicionar Ruído Artificial", use_container_width=True):
+            base = obter_base()
+            resultado = espaciais.adicionar_ruido_gaussiano(base, v_ruido)
+            registrar_nova_etapa(f"Ruído Gaussiano (σ={v_ruido})", resultado)
             st.rerun()
 
         sigma_gaussiano = st.slider("Sigma Gaussiano", 0.5, 3.0, 1.0, step=0.5)
@@ -168,6 +181,21 @@ def renderizar_ferramentas():
             base = obter_base()
             resultado = geometricas.redimensionar(base, escala)
             registrar_nova_etapa(f"Redimensionar ({escala}%)", resultado)
+            st.rerun()
+
+        v_angulo = st.slider("Ângulo de Rotação (°)", -180, 180, 0, step=5)
+        if st.button("Aplicar Rotação", use_container_width=True):
+            base = obter_base()
+            resultado = geometricas.rotacionar_angulo(base, v_angulo)
+            registrar_nova_etapa(f"Rotação ({v_angulo}°)", resultado)
+            st.rerun()
+
+        dx = st.number_input("Deslocamento X (pixels)", value=0, step=10)
+        dy = st.number_input("Deslocamento Y (pixels)", value=0, step=10)
+        if st.button("Aplicar Translação", use_container_width=True):
+            base = obter_base()
+            resultado = geometricas.transladar(base, dx, dy)
+            registrar_nova_etapa(f"Translação (X:{dx}, Y:{dy})", resultado)
             st.rerun()
 
     # 6. ANÁLISE E BINARIZAÇÃO
