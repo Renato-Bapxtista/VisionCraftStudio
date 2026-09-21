@@ -104,4 +104,22 @@ O resultado dos detectores de borda é apresentado em escala de cinza. O control
 
 ## Estrutura do projeto
 
+```
+VisionCraftStudio_2
+├─ app.py
+├─ componentes
+│  ├─ cabecalho.py
+│  ├─ ferramentas.py
+│  ├─ histograma.py
+│  ├─ historico.py
+│  ├─ upload.py
+│  ├─ visualizacao.py
+│  └─ __init__.py
+├─ estado.py
+├─ estilos.css
+├─ processamento
+├─ README.md
+├─ temp_download.png
+└─ __init__.py
 
+```
