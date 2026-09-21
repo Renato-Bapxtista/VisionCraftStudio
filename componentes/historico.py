@@ -1,6 +1,6 @@
 """
 Módulo: componentes/historico.py
-Descrição: Componente responsável pela navegação no histórico de edições (pipeline)
+Descrição: Controle do pipeline e navegação no histórico de etapas.
 """
 
 import streamlit as st
@@ -8,10 +8,7 @@ from estado import ir_para_etapa, remover_etapa_atual
 
 
 def renderizar_historico():
-    """
-    Renderiza os botões de navegação (Desfazer, Refazer, Remover) 
-    e a lista de etapas do histórico na interface
-    """
+    """Renderiza os botões do histórico e a lista de seleção de etapas."""
     st.markdown("<div class='figma-label' style='margin-top:10px;'>PIPELINE (HISTÓRICO)</div>", unsafe_allow_html=True)
 
     if len(st.session_state.pipeline) > 0:
@@ -20,7 +17,6 @@ def renderizar_historico():
 
         st.caption("AÇÕES DO HISTÓRICO")
         
-        # Botões de Desfazer e Refazer[cite: 1]
         if st.button("Desfazer", disabled=not pode_desfazer, use_container_width=True):
             ir_para_etapa(st.session_state.active_index - 1)
             st.rerun()
@@ -40,7 +36,6 @@ def renderizar_historico():
 
         st.divider()
 
-        # Lista de seleção de etapas gravadas[cite: 1]
         st.caption("ETAPAS DO PROCESSAMENTO")
         opcoes_etapas = list(range(len(st.session_state.pipeline)))
         
@@ -56,7 +51,6 @@ def renderizar_historico():
             label_visibility="collapsed",
         )
 
-        # Se o utilizador selecionar uma etapa diferente na lista, atualiza a visualização
         if indice_selecionado != st.session_state.active_index:
             ir_para_etapa(indice_selecionado)
             st.rerun()

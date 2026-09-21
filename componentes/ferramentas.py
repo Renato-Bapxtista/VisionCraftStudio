@@ -149,11 +149,11 @@ def renderizar_ferramentas():
             resultado = detectores[operador_borda](base, intensidade_borda)
             registrar_nova_etapa(f"Bordas: {operador_borda}", resultado)
             st.rerun()
-
-    # 5. TRANSFORMAÇÕES GEOMÉTRICAS
+            
+    # 5. TRANSFORMAÇÕES GEOMÉTRICAS        
     with grupo_geometria:
-        st.caption("Rotações, espelhamento e escala.")
-        sentido_rotacao = st.selectbox("Sentido Rotação", ("Horário", "Anti-horário"))
+        st.caption("Rotações, espelhamento, escala e translação.")
+        sentido_rotacao = st.selectbox("Sentido Rotação 90°", ("Horário", "Anti-horário"))
         if st.button("Rotacionar 90°", use_container_width=True):
             base = obter_base()
             horario = sentido_rotacao == "Horário"
@@ -162,19 +162,17 @@ def renderizar_ferramentas():
             registrar_nova_etapa(f"Rotação 90° ({desc})", resultado)
             st.rerun()
 
-        col_h, col_v = st.columns(2)
-        with col_h:
-            if st.button("Espelhar H", use_container_width=True):
-                base = obter_base()
-                resultado = geometricas.espelhar_horizontal(base)
-                registrar_nova_etapa("Espelhar H", resultado)
-                st.rerun()
-        with col_v:
-            if st.button("Espelhar V", use_container_width=True):
-                base = obter_base()
-                resultado = geometricas.espelhar_vertical(base)
-                registrar_nova_etapa("Espelhar V", resultado)
-                st.rerun()
+        if st.button("Espelhar Horizontalmente", use_container_width=True):
+            base = obter_base()
+            resultado = geometricas.espelhar_horizontal(base)
+            registrar_nova_etapa("Espelhar H", resultado)
+            st.rerun()
+
+        if st.button("Espelhar Verticalmente", use_container_width=True):
+            base = obter_base()
+            resultado = geometricas.espelhar_vertical(base)
+            registrar_nova_etapa("Espelhar V", resultado)
+            st.rerun()
 
         escala = st.slider("Escala (%)", 25, 200, 100, step=5)
         if st.button("Redimensionar", use_container_width=True):
@@ -197,7 +195,7 @@ def renderizar_ferramentas():
             resultado = geometricas.transladar(base, dx, dy)
             registrar_nova_etapa(f"Translação (X:{dx}, Y:{dy})", resultado)
             st.rerun()
-
+   
     # 6. ANÁLISE E BINARIZAÇÃO
     with grupo_analise:
         st.caption("Limiarização e equalização.")

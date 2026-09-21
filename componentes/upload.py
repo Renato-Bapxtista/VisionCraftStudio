@@ -85,4 +85,3 @@ def renderizar_upload():
                 f"{info['largura']} × {info['altura']} px • "
                 f"{info['formato']} • {info['modo']}{transparencia}"
             )
-        st.image(st.session_state.img_original, use_container_width=True)
