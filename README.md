@@ -104,12 +104,4 @@ O resultado dos detectores de borda é apresentado em escala de cinza. O control
 
 ## Estrutura do projeto
 
-```text
-VisionCraft_Studio/
-├── app.py                       # Interface Streamlit e gerenciamento do histórico
-├── processamento/
-│   ├── pontuais.py              # Operações pontuais e efeitos de intensidade
-│   ├── espaciais.py             # Suavização, nitidez e detectores de borda
-│   └── geometricas.py           # Rotação, espelhamento e redimensionamento
-└── README.md                    # Este guia
-```
+

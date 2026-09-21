@@ -32,3 +32,19 @@ def inicializar_estado():
     # Guarda metadados da imagem (largura, altura, formato)
     if 'img_info' not in st.session_state:
         st.session_state.img_info = None
+
+def registrar_nova_etapa(nome_efeito: str, nova_imagem):
+    """
+    Adiciona uma nova alteração/etapa ao histórico de alterações (pipeline)[cite: 1].
+    Se estivermos a editar a partir de um ponto intermédio, descarta o histórico posterior.
+    """
+    if st.session_state.active_index < len(st.session_state.pipeline) - 1:
+        st.session_state.pipeline = st.session_state.pipeline[:st.session_state.active_index + 1]
+
+    st.session_state.pipeline.append({
+        "nome": nome_efeito,
+        "imagem": nova_imagem.copy()
+    })
+    st.session_state.active_index = len(st.session_state.pipeline) - 1
+    st.session_state.img_atual = nova_imagem
+    
