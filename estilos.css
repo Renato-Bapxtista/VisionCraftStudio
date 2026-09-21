@@ -1,0 +1,47 @@
+/* ==========================================
+   ESTILOS GLOBAIS DA APLICAÇÃO
+   ========================================== */
+
+/* Oculta scrollbars indesejados e ajusta o fundo da página */
+html, body, [data-testid="stAppViewContainer"], .main {
+    background-color: #F8F9FA !important;
+    color: #1F2937 !important;
+    overflow: hidden !important;
+    height: 100vh !important;
+}
+
+/* Oculta o cabeçalho padrão (menu do Streamlit) */
+header[data-testid="stHeader"] {
+    display: none !important;
+}
+
+/* Margens internas da página principal */
+.block-container {
+    padding-top: 0.5rem !important;
+    padding-bottom: 0rem !important;
+    padding-left: 1.2rem !important;
+    padding-right: 1.2rem !important;
+}
+
+/* Estilo do nosso cabeçalho customizado */
+.figma-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FFFFFF;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+    margin-bottom: 8px;
+}
+
+/* Rótulos padronizados para as colunas */
+.figma-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #9CA3AF;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    width: 100%;
+}
