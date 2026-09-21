@@ -5,7 +5,7 @@ Descrição: Componente responsável por renderizar os controlos de edição de 
 """
 
 import streamlit as st
-from estado import registrar_nova_etapa
+from src.estado import registrar_nova_etapa
 from processamento import pontuais, espaciais, geometricas
 
 

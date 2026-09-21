@@ -62,10 +62,11 @@
             align-items: center !important;
             width: 100% !important;
             height: 100% !important;
+           
         }
 
         [data-testid="stColumn"]:nth-child(2) img {
-            max-height: 100vh !important;
+            max-height: 78vh !important;
             width: auto !important;
             max-width: 100% !important;
             object-fit: contain !important;

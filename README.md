@@ -1,125 +1,110 @@
 # VisionCraft Studio
 
-Aplicação web para estudo de processamento digital de imagens. Ela permite carregar uma imagem, aplicar operações pontuais, filtros espaciais, detectores de borda e transformações geométricas, acompanhando todo o processo em um histórico visual.
+Aplicação web para estudo e prática de processamento digital de imagens. Ela permite carregar uma imagem, aplicar transformações pontuais de intensidade, transformações geométricas, filtros espaciais por vizinhança, detectores de borda e análise de histograma, acompanhando todo o processo em um pipeline/histórico visual interativo.
 
-## Requisitos
+---
+
+## 🛠️ Requisitos e Instalação
 
 - Python 3.10 ou superior
 - `streamlit`
 - `numpy`
+- `scipy`
 - `matplotlib`
+- `opencv-python`
 - `Pillow`
 
-Instale as dependências no terminal, dentro da pasta do projeto:
+Instale as dependências executando o comando no terminal:
 
 ```bash
-pip install streamlit numpy matplotlib pillow
+pip install streamlit numpy scipy matplotlib opencv-python pillow
 ```
 
-## Como executar
+---
+
+## 🚀 Como executar a aplicação
+
+Com as dependências instaladas e no diretório raiz do projeto, execute:
 
 ```bash
-streamlit run app.py
+streamlit run src/app.py
 ```
 
-O Streamlit exibirá no terminal o endereço local para abrir a aplicação no navegador.
+O Streamlit iniciará o servidor local e abrirá a aplicação no navegador em `http://localhost:8501`.
 
-## Como usar
+---
 
-1. Em **Imagem**, carregue um arquivo JPG, JPEG ou PNG.
-2. Confira o nome, dimensões, formato e modo de cor exibidos abaixo do carregador.
-3. Escolha se a próxima operação será aplicada à **Última Processada** ou à **Original**.
-4. Abra um dos painéis de ferramentas, ajuste os controles e clique no botão de aplicação.
-5. A imagem resultante aparecerá no centro e a operação será incluída no histórico.
-6. Use **Salvar Imagem Resultado** para baixar o resultado em PNG.
+## 💡 Como usar
 
-Imagens PNG com transparência são aceitas. O canal alfa é preservado durante as operações compatíveis.
+1. **Carregar Imagem**: No painel superior esquerdo (**IMAGEM**), envie um arquivo nos formatos **JPG, JPEG ou PNG**.
+2. **Preservação da Original**: A imagem original é mantida intacta na memória para permitir a construção de diferentes pipelines de processamento.
+3. **Seleção de Alvo**: Escolha se a nova operação será aplicada sobre a **Última Processada** ou sobre a imagem **Original**.
+4. **Aplicação de Efeitos**: Abra uma das seções expansíveis no painel de **FERRAMENTAS** à direita, ajuste os parâmetros (sliders, selects, números) e clique no botão de aplicação.
+5. **Histórico (Pipeline)**: Cada operação realizada é registrada no histórico. Use os botões **Desfazer**, **Refazer**, **Remover Etapa** ou selecione diretamente qualquer etapa anterior.
+6. **Salvamento e Histograma**: No rodapé fixo da coluna direita, acompanhe o **Histograma de Intensidade (RGB ou Cinza)** e utilize o botão **Salvar Imagem Resultado** para exportar o produto final em PNG.
 
-## Pré-visualização
+---
 
-Na coluna central há dois modos:
+## ⚙️ Funcionalidades e Operações Implementadas
 
-- **Resultado**: mostra somente a imagem atualmente selecionada no histórico.
-- **Comparar**: mostra a imagem original e o resultado lado a lado.
+### 1. Transformações Pontuais (Intensidade)
+- **Conversão para Escala de Cinza**: Converte imagens coloridas usando luminância ponderada padrão (`0.299R + 0.587G + 0.114B`).
+- **Ajuste de Brilho**: Adiciona ou subtrai intensidade no intervalo `[0, 255]`.
+- **Ajuste de Contraste**: Multiplica as intensidades por um fator de ajuste.
+- **Ajuste de Gama**: Aplica a transformação não linear $s = c \cdot r^\gamma$ (clareia ou escurece tons médios).
+- **Negativo da Imagem**: Inverte as intensidades através da fórmula $g(x,y) = 255 - f(x,y)$.
+- **Efeito Sépia**: Aplica matriz de transformação de cor para estilo vintage.
+- **Posterização**: Reduz o número de níveis de cinza/cor em intervalos quantizados.
+- **Alongamento de Contraste**: Expande a faixa de intensidades para cobrir todo o intervalo `[0, 255]`.
+- **Equalização de Histograma**: Redistribui os níveis de cinza para maximizar o contraste global.
+- **Binarização (Limiarização)**: Converte a imagem para preto e branco com base em um limiar configurável (`0 a 255`).
 
-## Histórico de processamento
+### 2. Transformações Geométricas
+- **Rotação 90°**: Rotaciona nos sentidos horário ou anti-horário.
+- **Rotação por Ângulo Livre**: Rotaciona a imagem em qualquer ângulo em graus (positivo ou negativo) ajustando automaticamente as dimensões do container.
+- **Espelhamento**: Inversão horizontal (esquerda/direita) e vertical (cima/baixo).
+- **Redimensionamento (Escala)**: Redimensiona a imagem proporcionalmente de 25% a 200% via interpolação do vizinho mais próximo.
+- **Translação**: Desloca a imagem espacialmente nos eixos $X$ e $Y$ em pixels.
 
-O histórico registra a carga inicial e cada transformação aplicada.
+### 3. Transformações por Vizinhança (Filtros Espaciais)
+- **Filtro da Média**: Suavização por convolução com kernel de pesos iguais ($3\times3$, $5\times5$, $7\times7$).
+- **Filtro Gaussiano**: Suavização com pesos gaussianos e controle de tamanho e $\sigma$ (sigma).
+- **Adição de Ruído Gaussiano**: Adiciona ruído artificial para testes e avaliação dos filtros de suavização.
+- **Realce de Nitidez (Unsharp Masking)**: Destaca contornos subtraindo a versão suavizada da imagem original.
+- **Tratamento de Bordas**: Estratégia de **Reflexão (Mirroring/Reflect)** para lidar com pixels nas bordas durante as convoluções.
 
-- **Desfazer** volta para a etapa anterior.
-- **Refazer** avança para uma etapa posterior já existente.
-- **Remover Etapa** exclui a etapa atual e todas as posteriores, pois elas dependem dela.
-- A lista em **Etapas do Processamento** permite selecionar diretamente qualquer resultado salvo.
+### 4. Detecção de Bordas
+- **Operador Sobel**: Gradientes verticais e horizontais com máscaras $3\times3$ ponderadas no centro.
+- **Operador Prewitt**: Detecção de bordas por convolução com máscaras uniformes nos eixos X e Y.
+- **Operador Laplaciano**: Operador diferencial de segunda ordem para destacar variações bruscas de intensidade.
 
-Ao aplicar um efeito sobre uma etapa intermediária, a aplicação solicita confirmação antes de descartar as etapas posteriores e criar uma nova ramificação.
+---
 
-## Ferramentas disponíveis
+## 📁 Estrutura do Projeto
 
-### Ajustes de tom
-
-| Ferramenta | Uso |
-| --- | --- |
-| Preto & Branco | Converte a imagem para escala de cinza. |
-| Brilho | Aumenta ou reduz a intensidade dos pixels. |
-| Contraste | Amplia ou reduz a diferença entre tons claros e escuros. |
-| Gama | Valores menores que 1 clareiam tons médios; valores maiores que 1 os escurecem. |
-
-### Efeitos visuais
-
-| Ferramenta | Uso |
-| --- | --- |
-| Negativo | Inverte as cores da imagem. |
-| Sépia | Aplica tonalidade quente inspirada em fotografias antigas. |
-| Posterização | Reduz a quantidade de níveis de cor. |
-
-### Filtros espaciais
-
-| Ferramenta | Uso |
-| --- | --- |
-| Média | Suaviza a imagem usando a média dos pixels vizinhos. Janelas maiores produzem mais suavização. |
-| Gaussiano | Suaviza com pesos gaussianos e tende a preservar melhor transições suaves. |
-| Nitidez | Realça detalhes e contornos; intensidades altas podem destacar ruídos. |
-
-### Detecção de bordas
-
-| Operador | Uso |
-| --- | --- |
-| Sobel | Calcula gradientes com maior peso nos vizinhos centrais. |
-| Prewitt | Calcula gradientes com pesos uniformes. |
-| Laplaciano | Destaca variações de intensidade em todas as direções. |
-
-O resultado dos detectores de borda é apresentado em escala de cinza. O controle de intensidade amplifica ou reduz a resposta das bordas.
-
-### Transformações geométricas
-
-- Rotação de 90 graus nos sentidos horário ou anti-horário.
-- Espelhamento horizontal e vertical.
-- Redimensionamento proporcional entre 25% e 200%, por interpolação do vizinho mais próximo.
-
-### Análise e histograma
-
-- **Binarização** transforma a imagem em preto e branco usando o limiar escolhido.
-- **Equalização de histograma** redistribui os tons para melhorar o contraste global.
-- O histograma do resultado é exibido por canais RGB ou em escala de cinza, conforme a imagem atual.
-
-## Estrutura do projeto
-
-```
-VisionCraftStudio_2
-├─ app.py
-├─ componentes
-│  ├─ cabecalho.py
-│  ├─ ferramentas.py
-│  ├─ histograma.py
-│  ├─ historico.py
-│  ├─ upload.py
-│  ├─ visualizacao.py
-│  └─ __init__.py
-├─ estado.py
-├─ estilos.css
-├─ processamento
-├─ README.md
-├─ temp_download.png
-└─ __init__.py
-
+```text
+VisionCraftStudio_2/
+├── README.md                 # Documentação do projeto
+├── __init__.py
+├── src/                      # Código-fonte principal da aplicação
+│   ├── app.py                # Ponto de entrada (Streamlit UI layout em 3 colunas)
+│   ├── estado.py             # Gerenciamento do estado da sessão (session_state e pipeline)
+│   └── __init__.py
+├── componentes/              # Componentes modulares da interface de usuário
+│   ├── cabecalho.py          # Barra superior e marca
+│   ├── upload.py             # Carregamento de imagem e metadados
+│   ├── visualizacao.py       # Exibição central (Resultado / Comparar)
+│   ├── historico.py          # Painel do pipeline de histórico (Desfazer, Refazer, Etapas)
+│   ├── ferramentas.py        # Grupos de controles expansíveis de processamento
+│   ├── histograma.py         # Gráfico de histograma RGB/Cinza e download
+│   └── __init__.py
+├── processamento/            # Módulos com os algoritmos de processamento de imagem
+│   ├── pontuais.py           # Operações de intensidade de pixel
+│   ├── espaciais.py          # Filtros de vizinhança, convolução e ruído
+│   ├── geometricas.py        # Rotação, translação, espelhamento e escala
+│   └── __init__.py
+└── static/                   # Arquivos estáticos e recursos
+    ├── estilos.css           # Estilização visual CSS customizada
+    ├── temp_download.png     # Cache temporário para download de imagens
+    └── __init__.py
 ```

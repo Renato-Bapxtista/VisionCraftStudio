@@ -4,7 +4,7 @@ Descrição: Controle do pipeline e navegação no histórico de etapas.
 """
 
 import streamlit as st
-from estado import ir_para_etapa, remover_etapa_atual
+from src.estado import ir_para_etapa, remover_etapa_atual
 
 
 def renderizar_historico():

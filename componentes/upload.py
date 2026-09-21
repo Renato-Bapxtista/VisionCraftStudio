@@ -8,7 +8,7 @@ import io
 import numpy as np
 import streamlit as st
 from PIL import Image, UnidentifiedImageError
-from estado import registrar_nova_etapa
+from src.estado import registrar_nova_etapa
 
 
 def renderizar_upload():

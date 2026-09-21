@@ -13,7 +13,7 @@ if DIRETORIO_RAIZ not in sys.path:
 
 import streamlit as st
 
-from estado import inicializar_estado
+from src.estado import inicializar_estado
 from componentes.cabecalho import renderizar_cabecalho
 from componentes.upload import renderizar_upload
 from componentes.visualizacao import renderizar_visualizacao
@@ -68,8 +68,10 @@ with col_direita:
     else:
         st.info("Aguardando carregamento de imagem...")
 
-    # Área de ferramentas e histograma com scroll independente
+    # Área de ferramentas expansíveis com scroll independente
     if st.session_state.img_atual is not None:
-        with st.container(height=540, border=False):
+        with st.container(height=340, border=False):
             renderizar_ferramentas()
-            renderizar_histograma()
+        
+        # Histograma fixo na parte inferior da coluna direita
+        renderizar_histograma()
