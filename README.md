@@ -14,7 +14,39 @@ Aplicação web para estudo e prática de processamento digital de imagens. Ela 
 - `opencv-python`
 - `Pillow`
 
-Instale as dependências executando o comando no terminal:
+Recomenda-se o uso de um ambiente virtual (**venv**) para isolar as dependências do projeto e evitar conflitos ou problemas de compatibilidade no sistema.
+
+### 1. Criar o ambiente virtual
+
+No diretório raiz do projeto, execute:
+
+```bash
+python -m venv venv
+```
+
+### 2. Ativar o ambiente virtual
+
+- **Windows (PowerShell):**
+
+  ```powershell
+  .\venv\Scripts\Activate.ps1
+  ```
+
+- **Windows (Prompt de Comando - CMD):**
+
+  ```cmd
+  .\venv\Scripts\activate.bat
+  ```
+
+- **Linux / macOS:**
+
+  ```bash
+  source venv/bin/activate
+  ```
+
+### 3. Instalar as dependências
+
+Com o ambiente virtual ativado, instale os pacotes necessários:
 
 ```bash
 pip install streamlit numpy scipy matplotlib opencv-python pillow
@@ -48,6 +80,7 @@ O Streamlit iniciará o servidor local e abrirá a aplicação no navegador em `
 ## ⚙️ Funcionalidades e Operações Implementadas
 
 ### 1. Transformações Pontuais (Intensidade)
+
 - **Conversão para Escala de Cinza**: Converte imagens coloridas usando luminância ponderada padrão (`0.299R + 0.587G + 0.114B`).
 - **Ajuste de Brilho**: Adiciona ou subtrai intensidade no intervalo `[0, 255]`.
 - **Ajuste de Contraste**: Multiplica as intensidades por um fator de ajuste.
@@ -60,6 +93,7 @@ O Streamlit iniciará o servidor local e abrirá a aplicação no navegador em `
 - **Binarização (Limiarização)**: Converte a imagem para preto e branco com base em um limiar configurável (`0 a 255`).
 
 ### 2. Transformações Geométricas
+
 - **Rotação 90°**: Rotaciona nos sentidos horário ou anti-horário.
 - **Rotação por Ângulo Livre**: Rotaciona a imagem em qualquer ângulo em graus (positivo ou negativo) ajustando automaticamente as dimensões do container.
 - **Espelhamento**: Inversão horizontal (esquerda/direita) e vertical (cima/baixo).
@@ -67,6 +101,7 @@ O Streamlit iniciará o servidor local e abrirá a aplicação no navegador em `
 - **Translação**: Desloca a imagem espacialmente nos eixos $X$ e $Y$ em pixels.
 
 ### 3. Transformações por Vizinhança (Filtros Espaciais)
+
 - **Filtro da Média**: Suavização por convolução com kernel de pesos iguais ($3\times3$, $5\times5$, $7\times7$).
 - **Filtro Gaussiano**: Suavização com pesos gaussianos e controle de tamanho e $\sigma$ (sigma).
 - **Adição de Ruído Gaussiano**: Adiciona ruído artificial para testes e avaliação dos filtros de suavização.
@@ -74,6 +109,7 @@ O Streamlit iniciará o servidor local e abrirá a aplicação no navegador em `
 - **Tratamento de Bordas**: Estratégia de **Reflexão (Mirroring/Reflect)** para lidar com pixels nas bordas durante as convoluções.
 
 ### 4. Detecção de Bordas
+
 - **Operador Sobel**: Gradientes verticais e horizontais com máscaras $3\times3$ ponderadas no centro.
 - **Operador Prewitt**: Detecção de bordas por convolução com máscaras uniformes nos eixos X e Y.
 - **Operador Laplaciano**: Operador diferencial de segunda ordem para destacar variações bruscas de intensidade.
@@ -84,6 +120,8 @@ O Streamlit iniciará o servidor local e abrirá a aplicação no navegador em `
 
 ```text
 VisionCraftStudio_2/
+├── .streamlit/
+│   └── config.toml           # Configuração de tema e servidor do Streamlit
 ├── README.md                 # Documentação do projeto
 ├── __init__.py
 ├── src/                      # Código-fonte principal da aplicação
