@@ -4,7 +4,7 @@ Aplicação web para estudo e prática de processamento digital de imagens. Ela 
 
 ---
 
-## 🛠️ Requisitos e Instalação
+## Requisitos e Instalação
 
 - Python 3.10 ou superior
 - `streamlit`
@@ -54,7 +54,7 @@ pip install streamlit numpy scipy matplotlib opencv-python pillow
 
 ---
 
-## 🚀 Como executar a aplicação
+## Como executar a aplicação
 
 Com as dependências instaladas e no diretório raiz do projeto, execute:
 
@@ -66,7 +66,7 @@ O Streamlit iniciará o servidor local e abrirá a aplicação no navegador em `
 
 ---
 
-## 💡 Como usar
+## Como usar
 
 1. **Carregar Imagem**: No painel superior esquerdo (**IMAGEM**), envie um arquivo nos formatos **JPG, JPEG ou PNG**.
 2. **Preservação da Original**: A imagem original é mantida intacta na memória para permitir a construção de diferentes pipelines de processamento.
@@ -77,7 +77,7 @@ O Streamlit iniciará o servidor local e abrirá a aplicação no navegador em `
 
 ---
 
-## ⚙️ Funcionalidades e Operações Implementadas
+## Funcionalidades e Operações Implementadas
 
 ### 1. Transformações Pontuais (Intensidade)
 
@@ -116,7 +116,7 @@ O Streamlit iniciará o servidor local e abrirá a aplicação no navegador em `
 
 ---
 
-## 📁 Estrutura do Projeto
+## Estrutura do Projeto
 
 ```text
 VisionCraftStudio_2/

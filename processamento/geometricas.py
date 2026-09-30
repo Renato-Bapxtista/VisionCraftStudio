@@ -15,6 +15,9 @@ def rotacionar_90(imagem: np.ndarray, horario: bool = True) -> np.ndarray:
     Parâmetros:
         imagem (np.ndarray): Matriz da imagem de entrada.
         horario (bool): Se True, rotaciona no sentido horário; se False, anti-horário.
+
+    A operação apenas permuta os pixels, sem interpolação; por isso preserva
+    exatamente os valores e o tipo da matriz, mas troca largura e altura.
     """
     # np.rot90 por padrão gira no sentido anti-horário k vezes.
     # Para o sentido horário, usamos k=-1 (ou k=3).
@@ -29,6 +32,11 @@ def rotacionar_angulo(imagem: np.ndarray, angulo: float) -> np.ndarray:
     Parâmetros:
         imagem (np.ndarray): Matriz da imagem.
         angulo (float): Ângulo de rotação em graus (aceita valores positivos e negativos).
+
+    O modo reshape=True expande o canvas para acomodar a imagem rotacionada.
+    Pixels fora da área original recebem cval=0 (preto). A transformação exige
+    reamostragem em coordenadas fracionárias, feita pela interpolação de ordem
+    padrão do SciPy, podendo suavizar bordas e alterar valores de intensidade.
     """
     return ndimage.rotate(imagem, angulo, reshape=True, mode='constant', cval=0)
 
@@ -41,6 +49,11 @@ def transladar(imagem: np.ndarray, dx: int, dy: int) -> np.ndarray:
         imagem (np.ndarray): Matriz da imagem.
         dx (int): Deslocamento horizontal em pixels.
         dy (int): Deslocamento vertical em pixels.
+
+    Os deslocamentos são convertidos para a ordem de eixos da matriz (linhas,
+    colunas): dy atua verticalmente e dx horizontalmente. Em imagens coloridas,
+    o deslocamento zero no terceiro eixo evita misturar canais. As regiões que
+    saem do canvas são descartadas e as novas posições são preenchidas com zero.
     """
     if len(imagem.shape) == 3:
         shift_tuple = (dy, dx, 0)
@@ -50,12 +63,12 @@ def transladar(imagem: np.ndarray, dx: int, dy: int) -> np.ndarray:
 
 
 def espelhar_horizontal(imagem: np.ndarray) -> np.ndarray:
-    """Inverte a imagem horizontalmente (esquerda <-> direita)."""
+    """Inverte colunas (esquerda-direita), sem interpolar nem alterar pixels."""
     return np.fliplr(imagem)
 
 
 def espelhar_vertical(imagem: np.ndarray) -> np.ndarray:
-    """Inverte a imagem verticalmente (cima <-> baixo)."""
+    """Inverte linhas (cima-baixo), sem interpolar nem alterar pixels."""
     return np.flipud(imagem)
 
 
@@ -66,6 +79,11 @@ def redimensionar(imagem: np.ndarray, escala_percentual: float) -> np.ndarray:
     Parâmetros:
         imagem (np.ndarray): Matriz da imagem.
         escala_percentual (float): Porcentagem de redimensionamento (ex: 50 para 50%, 200 para 200%).
+
+    A escala é aplicada aos eixos espaciais, não ao eixo de canais. A ordem 0
+    usa o vizinho mais próximo: preserva valores existentes e evita criar
+    intensidades intermediárias, mas pode produzir aliasing ou aspecto em
+    blocos, especialmente ao ampliar ou reduzir texturas finas.
     """
     fator = escala_percentual / 100.0
     if len(imagem.shape) == 3:
